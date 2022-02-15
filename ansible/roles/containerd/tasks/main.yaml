@@ -1,0 +1,15 @@
+- name: Install Container RunTime
+  shell: |
+    dnf update -y
+    dnf install -y yum-utils device-mapper-persistent-data lvm2
+    dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+    dnf install -y containerd.io
+    dnf install -y iproute-tc
+
+- name: Configure Containerd
+  shell: |
+    mkdir -p /etc/containerd
+    containerd config default > /etc/containerd/config.toml
+    systemctl restart containerd
+    sleep 10
+    systemctl enable containerd

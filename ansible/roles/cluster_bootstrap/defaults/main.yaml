@@ -1,0 +1,3 @@
+cidr_range: 192.168.0.0/16
+host_addr: 18.132.43.43
+calico_networking: https://docs.projectcalico.org/manifests/calico.yaml

@@ -1,0 +1,29 @@
+---
+- hosts: master:worker
+  become: true
+  gather_facts: true
+  roles:
+    - name: swap
+      tags: swap
+    - name: runtime
+      tags: runtime
+    - name: containerd
+      tags: containerd
+    - name: install_binaries
+      tags: install_binaries
+
+
+- hosts: master
+  become: true
+  gather_facts: true
+  roles:
+    - name: cluster_bootstrap
+      tags: cluster_bootstrap
+      
+
+- hosts: worker
+  become: true
+  gather_facts: true
+  roles:
+    - name: cluster_join
+      tags: cluster_join

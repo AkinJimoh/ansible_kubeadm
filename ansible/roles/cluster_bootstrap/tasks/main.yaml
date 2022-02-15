@@ -1,0 +1,42 @@
+- name: Cluster Initialization Pre-Check
+  stat: 
+    path:
+      /var/lib/etcd
+  register: status
+  
+- name: Cluster Initialization
+  # shell: kubeadm init --pod-network-cidr={{ cidr_range }} --apiserver-advertise-address={{ host_addr }}
+  # shell: kubeadm init --apiserver-advertise-address={{ ipify_public_ip }}
+  shell: kubeadm init --apiserver-cert-extra-sans={{ ipify_public_ip }}
+  when: status.stat.exists == false
+
+- name: Copy admin.conf File to Local
+  ansible.builtin.fetch:
+    src: /etc/kubernetes/admin.conf
+    dest: /Users/admin/Desktop/kubeConfig
+    flat: yes
+  when: status.stat.exists == false
+
+- name: Get Calico Networking
+  shell: |
+    curl {{ calico_networking }} -o calico.yaml
+    sleep 5
+  when: status.stat.exists == false
+    
+
+- name: Calico Network Configuration
+  shell: |
+    export KUBECONFIG=/etc/kubernetes/admin.conf
+    kubectl apply -f calico.yaml
+  when: status.stat.exists == false
+
+- name: Generate join command
+  shell: |
+    kubeadm token create --print-join-command
+  register: join_command
+  when: status.stat.exists == false
+
+- name: Copy join command to local file
+  become: false
+  local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="./join-command"
+  when: status.stat.exists == false
