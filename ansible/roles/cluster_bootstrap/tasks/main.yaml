@@ -20,7 +20,7 @@
 - name: Get Calico Networking
   shell: |
     curl {{ calico_networking }} -o calico.yaml
-    sleep 5
+    sleep 20
   when: status.stat.exists == false
     
 

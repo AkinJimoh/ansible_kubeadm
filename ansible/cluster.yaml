@@ -13,17 +13,17 @@
       tags: install_binaries
 
 
-- hosts: master
-  become: true
-  gather_facts: true
-  roles:
-    - name: cluster_bootstrap
-      tags: cluster_bootstrap
+# - hosts: master
+#   become: true
+#   gather_facts: true
+#   roles:
+#     - name: cluster_bootstrap
+#       tags: cluster_bootstrap
       
 
-- hosts: worker
-  become: true
-  gather_facts: true
-  roles:
-    - name: cluster_join
-      tags: cluster_join
+# - hosts: worker
+#   become: true
+#   gather_facts: true
+#   roles:
+#     - name: cluster_join
+#       tags: cluster_join
