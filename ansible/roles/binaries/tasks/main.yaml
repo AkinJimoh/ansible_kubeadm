@@ -16,9 +16,10 @@
     dnf upgrade -y
     dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 
-- name: Install Ansible
-  shell: 
+- name: Install Utilities
+  shell: |
     dnf install ansible -y
+    dnf install net-tools -y
 
 #   yum: 
 #     name: "{{ packages }}"

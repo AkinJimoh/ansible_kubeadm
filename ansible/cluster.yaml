@@ -9,8 +9,10 @@
       tags: runtime
     - name: containerd
       tags: containerd
-    - name: install_binaries
-      tags: install_binaries
+    - name: binaries
+      tags: binaries
+    - name: cri-config
+      tags: cri-config
 
 
 # - hosts: master

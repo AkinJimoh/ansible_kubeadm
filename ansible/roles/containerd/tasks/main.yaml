@@ -9,7 +9,4 @@
 - name: Configure Containerd
   shell: |
     mkdir -p /etc/containerd
-    containerd config default > /etc/containerd/config.toml
-    systemctl restart containerd
-    sleep 10
     systemctl enable containerd

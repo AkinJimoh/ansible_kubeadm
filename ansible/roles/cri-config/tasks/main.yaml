@@ -1,0 +1,8 @@
+- name: Configure Containerd
+  ansible.builtin.copy:
+    src: config.toml
+    dest: /etc/containerd/config.toml
+
+- name: Restart Containerd
+  shell: |
+    systemctl restart containerd
