@@ -16,6 +16,7 @@
     dest: /Users/admin/Desktop/kubeConfig
     flat: yes
   when: status.stat.exists == false
+  
 
 - name: Get Calico Networking
   shell: |

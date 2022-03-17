@@ -1,0 +1,4 @@
+# BEGIN ANSIBLE MANAGED BLOCK
+[Service]
+Environment="KUBELET_EXTRA_ARGS=--container-runtime=remote --runtime-request-timeout=15m --container-runtime-endpoint=unix:///run/containerd/containerd.sock"
+# END ANSIBLE MANAGED BLOCK

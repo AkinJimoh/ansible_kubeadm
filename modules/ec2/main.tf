@@ -73,25 +73,25 @@ resource "aws_autoscaling_group" "master" {
   )
 }
 
-// resource "aws_autoscaling_group" "worker" {
-//   count    = 2
-//   name     = "worker-asg-${count.index + 1}"
-//   max_size = 1
-//   min_size = 1
-//   launch_template {
-//     id      = aws_launch_template.cluster.id
-//     version = "$Latest"
-//   }
-//   vpc_zone_identifier = [element(var.public_subnet, 0), element(var.public_subnet, 1)]
+resource "aws_autoscaling_group" "worker" {
+  count    = 2
+  name     = "worker-asg-${count.index + 1}"
+  max_size = 1
+  min_size = 1
+  launch_template {
+    id      = aws_launch_template.cluster.id
+    version = "$Latest"
+  }
+  vpc_zone_identifier = [element(var.public_subnet, 0), element(var.public_subnet, 1)]
 
-//   tags = concat(
-//     [
-//       {
-//         "key"                 = "Name"
-//         "value"               = "worker-node"
-//         "propagate_at_launch" = true
-//       },
-//     ],
-//     var.extra_tags,
-//   )
-// }
+  tags = concat(
+    [
+      {
+        "key"                 = "Name"
+        "value"               = "worker-node"
+        "propagate_at_launch" = true
+      },
+    ],
+    var.extra_tags,
+  )
+}

@@ -1,0 +1,31 @@
+- name: check if man.sh files exists
+  stat: 
+    path: /Users/admin/HMRC_CLUSTER/ansible/testDelete/man.sh
+  register: file_in
+
+- name: Ansible create file if it doesn't exist
+  file:
+    path: "/Users/admin/HMRC_CLUSTER/ansible/testDelete/man.sh"
+    state: touch
+  when: file_in.stat.exists == False
+
+- name: Create Systemd Drop-In for Containerd
+  blockinfile:
+    path: /Users/admin/HMRC_CLUSTER/ansible/testDelete/man.sh
+    block: |
+      [Service]
+      Environment="KUBELET_EXTRA_ARGS=--container-runtime=remote --runtime-request-timeout=15m --container-runtime-endpoint=unix:///run/containerd/containerd.sock"
+
+
+- name: Ensure SELinux is set to enforcing mode
+  replace:
+    path: /Users/admin/HMRC_CLUSTER/ansible/testDelete/kubeadm.yaml
+    regexp: '^  advertiseAddress:'
+    replace: "  advertiseAddress: {{ ansible_default_ipv4['address'] }}"
+
+
+
+
+
+
+
